@@ -2,8 +2,7 @@
 
 this app was made while studying node.js + express + mongoDB.
 
-######To keep in mind: 
-they have integrations with Sendgrid and Stripe
+To keep in mind: they have integrations with Sendgrid and Stripe
 
 ## Get started
 ```bash
