@@ -13,17 +13,14 @@ const tokenGenerator = id => {
     });
 }
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
     const token = tokenGenerator(user._id);
 
-    const cookieOptions = {
+    res.cookie('jwt', token, {
         expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
-        httpOnly: true
-    }
-
-    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-    res.cookie('jwt', token, cookieOptions);
+        httpOnly: true,
+        secure: req.secure || req.headers('x-forwarded-proto') === 'https'
+    });
     // quitar la contraseña en la respuesta
     user.password = undefined;
 
@@ -53,7 +50,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     console.log(url)
     await new Email(newUser, url).sendWelcome();
 
-    createSendToken(newUser, 201, res);
+    createSendToken(newUser, 201, req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -70,7 +67,7 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError('Invalid email or password', 401));
     }
 
-    createSendToken(user, 200, res);
+    createSendToken(user, 200, req, res);
 });
 
 exports.protectAccess = catchAsync(async (req, res, next) => {
@@ -214,7 +211,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     user.passwordResetExpires = undefined;
     await user.save()
 
-    createSendToken(user, 200, res);
+    createSendToken(user, 200, req, res);
 
 });
 
@@ -232,5 +229,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     await user.save();
 
     // loggear el usuario
-    createSendToken(user, 200, res);
+    createSendToken(user, 200, req, res);
 });
