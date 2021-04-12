@@ -33,7 +33,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   res.status(200)
     .set(
       'Content-Security-Policy',
-      "connect-src https://api.stripe.com;"
+      "connect-src https://api.stripe.com https://checkout.stripe.com;"
     )
     .json({
       status: 'success',
