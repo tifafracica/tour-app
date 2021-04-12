@@ -8,10 +8,10 @@ exports.getOverview = catchAsync(async (req, res) => {
     const tours = await Tour.find()
 
     res.status(200)
-        // .set(
-        //     'Content-Security-Policy',
-        //     "connect-src 'self' https://*.tiles.mapbox.com https://api.mapbox.com https://events.mapbox.com https://api.stripe.com; default-src https://*.mapbox.com https://*.stripe.com ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
-        // )
+        .set(
+            'Content-Security-Policy',
+            "connect-src 'self' https://*.tiles.mapbox.com https://api.mapbox.com https://events.mapbox.com https://api.stripe.com"
+        )
         .render('overview', {
             title: 'All Tours',
             tours
@@ -28,10 +28,10 @@ exports.getTour = catchAsync(async (req, res, next) => {
         return next(new AppError('There is no tour with that name', 404))
     }
     res.status(200)
-        // .set(
-        //     'Content-Security-Policy',
-        //     "connect-src 'self' https://*.tiles.mapbox.com https://api.mapbox.com https://events.mapbox.com https://api.stripe.com; default-src 'self' https://*.mapbox.com https://*.stripe.com ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
-        // )
+        .set(
+            'Content-Security-Policy',
+            "connect-src 'self' https://*.tiles.mapbox.com https://api.mapbox.com https://events.mapbox.com https://api.stripe.com"
+        )
         .render('tour', {
             title: `${tour.name} Tour`,
             tour
@@ -45,10 +45,10 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
     const tours = await Tour.find({ _id: { $in: toursIds } });
 
     res.status(200)
-        // .set(
-        //     'Content-Security-Policy',
-        //     "default-src 'self' https://*.mapbox.com https://*.stripe.com ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://cdnjs.cloudflare.com https://api.mapbox.com https://js.stripe.com/v3/ 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
-        // )
+        .set(
+            'Content-Security-Policy',
+            "connect-src 'self' https://*.tiles.mapbox.com https://api.mapbox.com https://events.mapbox.com https://api.stripe.com"
+        )
         .render('overview', {
             title: 'My Tours',
             tours
