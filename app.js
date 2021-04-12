@@ -33,14 +33,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", 'https://*.mapbox.com', 'https://*.stripe.com'],
+      defaultSrc: ["'self'", 'https://*.mapbox.com', 'https://*.stripe.com', "'blob'"],
       connectSrc: [
         "'self'",
         'https://*.tiles.mapbox.com',
         'https://api.mapbox.com',
         'https://events.mapbox.com',
         'https://api.stripe.com',
-        'https://checkout.stripe.com'
+        'https://checkout.stripe.com',
+        "'blob'"
       ],
       baseUri: ["'self'"],
       fontSrc: ["'self'", 'https:', 'data:'],
