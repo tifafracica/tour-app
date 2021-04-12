@@ -31,10 +31,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 
   // 3. enviar la respuesta al cliente
   res.status(200)
-    .set(
-      'Content-Security-Policy',
-      "connect-src 'self' https://checkout.stripe.com;"
-    )
     .json({
       status: 'success',
       session
