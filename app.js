@@ -30,7 +30,29 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //HTTP headers - seteo de seguridad
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", 'https://*.mapbox.com', 'https://*.stripe.com'],
+      baseUri: ["'self'"],
+      fontSrc: ["'self'", 'https:', 'data:'],
+      scriptSrc: ["'self'", 'https://*.cloudflare.com'],
+      imgSrc: ["'self'", 'https://www.gstatic.com'],
+      scriptSrc: [
+        "'self'",
+        'https://*.stripe.com',
+        'https://cdnjs.cloudflare.com',
+        'https://api.mapbox.com',
+        'https://js.stripe.com',
+        "'blob'",
+      ],
+      frameSrc: ["'self'", 'https://*.stripe.com'],
+      objectSrc: ["'none'"],
+      styleSrc: ["'self'", 'https:', 'unsafe-inline'],
+      upgradeInsecureRequests: [],
+    },
+  })
+);
 
 // development loggin
 if (process.env.NODE_ENV === 'development') {
