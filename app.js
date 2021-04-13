@@ -16,6 +16,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const { webhookCheckout } = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 const { urlencoded } = require('express');
 
@@ -28,6 +29,7 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(cors());
+
 app.options('*', cors());
 // middleware globales
 
@@ -73,7 +75,7 @@ const limiter = rateLimit({
 // aca afectamos todas la rutas.
 app.use('/api', limiter);
 
-
+app.post('/webhook-checkout', express.raw({ type: 'application/json' }), webhookCheckout);
 // body parsing, lee la data de body dentro del req.body
 
 app.use(express.json({ limit: '10kb' })); //this is a middleware
