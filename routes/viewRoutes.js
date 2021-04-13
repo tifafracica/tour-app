@@ -5,6 +5,7 @@ const { createBookingCheckout } = require('../controllers/bookingController');
 
 const router = express.Router();
 
+router.use(viewsController.alerts);
 
 router.get('/', isLoggedIn, getOverview)
 router.get('/signup', getSingupForm);
