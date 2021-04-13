@@ -1,11 +1,11 @@
 const express = require('express');
-const { getOverview, getTour, getLoginForm, getAccount, updateUserData, getMyTours, getSingupForm } = require('../controllers/viewController');
+const { getOverview, getTour, getLoginForm, getAccount, updateUserData, getMyTours, getSingupForm, alerts } = require('../controllers/viewController');
 const { isLoggedIn, protectAccess } = require('../controllers/authController');
-const { createBookingCheckout } = require('../controllers/bookingController');
+// const { createBookingCheckout } = require('../controllers/bookingController');
 
 const router = express.Router();
 
-router.use(viewsController.alerts);
+router.use(alerts);
 
 router.get('/', isLoggedIn, getOverview)
 router.get('/signup', getSingupForm);
